@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangweicheng.rbac.mapper.EmployeeMapper">
+    <!--登录sql-->
+    <select id="login" parameterType="com.wangweicheng.rbac.pojo.vo.LoginInfoVo" resultType="com.wangweicheng.rbac.pojo.Employee">
+        select * from employee where name = #{username} and password = #{password}
+    </select>
+
+    <sql id="selectEmployeeVo">
+        select e.id,e.name,e.password,e.email,e.age,e.admin,e.dept_id,
+               d.id did,d.name dname,d.sn dsn
+        from employee e left join department d on e.dept_id=d.id
+    </sql>
+    <resultMap id="empRst" type="com.wangweicheng.rbac.pojo.Employee">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="password" property="password"></result>
+        <result column="email" property="email"></result>
+        <result column="age" property="age"></result>
+        <result column="admin" property="admin"></result>
+        <association property="department" javaType="com.wangweicheng.rbac.pojo.Department">
+            <id column="did" property="id"></id>
+            <result column="dname" property="name"></result>
+            <result column="dsn" property="sn"></result>
+        </association>
+    </resultMap>
+    <select id="selectAll" resultMap="empRst">
+        <include refid="selectEmployeeVo"></include>
+        order by e.id
+    </select>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="empRst">
+        <include refid="selectEmployeeVo"></include>
+        where e.id = #{id}
+        order by e.id
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from employee where id =#{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.wangweicheng.rbac.pojo.Employee" useGeneratedKeys="true" keyProperty="id">
+        insert into employee(name,password,email,age,admin,dept_id)
+        values(#{name},#{password},#{email},#{age},#{admin},#{department.id})
+    </insert>
+
+    <update id="updateById" parameterType="com.wangweicheng.rbac.pojo.Employee">
+        update employee set name=#{name},password=#{password},
+           email=#{email},age=#{age},admin=#{admin},dept_id=#{department.id}
+        where id=#{id}
+    </update>
+
+    <update id="updateStateById">
+        update employee set admin=#{admin} where id=#{id}
+    </update>
+
+    <select id="queryForList" resultMap="empRst" parameterType="com.wangweicheng.rbac.pojo.query.EmployeeQueryObject">
+        <include refid="selectEmployeeVo"></include>
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                and (e.name like concat('%',#{keyword},'%') or  e.email like concat('%',#{keyword},'%'))
+            </if>
+            <if test="deptId!=null and deptId!=-1">
+                and e.dept_id=#{deptId}
+            </if>
+        </where>
+        order by e.id
+    </select>
+
+    <insert id="insertRelation">
+        insert into employee_role(employee_id, role_id) values(#{employeeId}, #{roleId})
+    </insert>
+    <delete id="deleteRelation">
+        delete from employee_role where employee_id = #{employeeId}
+    </delete>
+</mapper>
