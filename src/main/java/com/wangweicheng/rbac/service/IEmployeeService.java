@@ -14,7 +14,7 @@ public interface IEmployeeService {
     List<Employee> selectAll();
     PageResult<Employee> selectByPage(EmployeeQueryObject qo);
     void deleteById(Long id);
-    void saveOrUpadate(EmployeeRoleVo employeeRoleVo);
+    void saveOrUpdate(EmployeeRoleVo employeeRoleVo);
     void updateStateById(AdminStateVo adminStateVo);
     Employee selectById(Long id);
 }

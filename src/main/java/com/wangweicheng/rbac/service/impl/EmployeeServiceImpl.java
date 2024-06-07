@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     @Transactional
-    public void saveOrUpadate(EmployeeRoleVo employeeRoleVo) {
+    public void saveOrUpdate(EmployeeRoleVo employeeRoleVo) {
         Assert.notNull(employeeRoleVo,"非法參數");
         Assert.notNull(employeeRoleVo.getEmployee(),"非法參數");
         if(employeeRoleVo.getEmployee().getId()==null){

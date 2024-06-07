@@ -29,12 +29,12 @@ public class DapartmentSerivceImpl implements IDepartmentService {
      * @return
      */
     @Override
-    public PageResult<Department> selectByPage(QueryObject qo) {
+    public PageInfo selectByPage(QueryObject qo) {
         PageHelper.startPage(qo.getPageNum(),qo.getPageSize());
         PageInfo pageInfo=new PageInfo<>(departmentMapper.queryForList());
         PageResult pageResult = new PageResult();
         BeanUtils.copyProperties(pageInfo,pageResult);
-        return pageResult;
+        return pageInfo;
     }
 
     /**

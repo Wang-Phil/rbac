@@ -20,17 +20,22 @@ public class JsonResult {
     private Object data;
 
     public static JsonResult success() {
-        JsonResult result = new JsonResult(200, "操作成功", "true", null);
+        JsonResult result = new JsonResult(200, "操作成功", "success", null);
         return result;
     }
 
     public static JsonResult success(Object data) {
-        JsonResult result = new JsonResult(200, "操作成功", "true", data);
+        JsonResult result = new JsonResult(200, "操作成功", "success", data);
         return result;
     }
 
     public static JsonResult fail() {
-        JsonResult result = new JsonResult(500, "操作失败", "false", null);
+        JsonResult result = new JsonResult(500, "操作失败", "fail", null);
+        return result;
+    }
+
+    public static JsonResult fail(String msg) {
+        JsonResult result = new JsonResult(500, msg, "fail", null);
         return result;
     }
 }

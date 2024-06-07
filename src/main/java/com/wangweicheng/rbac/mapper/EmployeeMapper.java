@@ -18,7 +18,7 @@ public interface EmployeeMapper {
     int deleteById(Long id);
     //添加员工
     int insert(Employee employee);
-    //根据员工id更新员工
+    //根据员工id更新 员工
     int updateById(Employee employee);
     // 更新员工管理员状态
     int updateStateById(@Param("id") Long id,@Param("admin") boolean admin);

@@ -2,6 +2,7 @@ package com.wangweicheng.rbac.service;
 
 
 
+import com.github.pagehelper.PageInfo;
 import com.wangweicheng.rbac.pojo.query.QueryObject;
 import com.wangweicheng.rbac.pojo.vo.PageResult;
 import com.wangweicheng.rbac.pojo.Department;
@@ -13,5 +14,5 @@ public interface IDepartmentService {
     void deleteById(Long id);
     void saveOrUpdate(Department department);
     Department selectById(Long id);
-    PageResult<Department> selectByPage(QueryObject qo);
+    PageInfo selectByPage(QueryObject qo);
 }

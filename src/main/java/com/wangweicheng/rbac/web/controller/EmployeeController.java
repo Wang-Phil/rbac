@@ -3,6 +3,7 @@ import com.github.pagehelper.PageInfo;
 import com.wangweicheng.rbac.pojo.Employee;
 import com.wangweicheng.rbac.pojo.query.EmployeeQueryObject;
 import com.wangweicheng.rbac.pojo.query.QueryObject;
+import com.wangweicheng.rbac.pojo.vo.AdminStateVo;
 import com.wangweicheng.rbac.pojo.vo.EmployeeRoleVo;
 import com.wangweicheng.rbac.pojo.vo.JsonResult;
 import com.wangweicheng.rbac.pojo.vo.PageResult;
@@ -47,7 +48,7 @@ public class EmployeeController {
     }
 
     /**
-     * 新增或者删除部门
+     * 新增或者删除员工
      * @param employeeRoleVo
      * @return
      */
@@ -74,5 +75,16 @@ public class EmployeeController {
     @GetMapping("/listAll")
     public JsonResult listAll() {
         return JsonResult.success(employeeService.selectAll());
+    }
+
+    /**
+     * 更新员工管理员状态
+     * @param adminStateVo
+     * @return
+     */
+    @PostMapping("/updateState")
+    public JsonResult updateState(@RequestBody AdminStateVo adminStateVo) {
+        employeeService.updateStateById(adminStateVo);
+        return JsonResult.success();
     }
 }
