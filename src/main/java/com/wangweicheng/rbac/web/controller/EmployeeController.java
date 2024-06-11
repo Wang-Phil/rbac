@@ -8,6 +8,7 @@ import com.wangweicheng.rbac.pojo.vo.EmployeeRoleVo;
 import com.wangweicheng.rbac.pojo.vo.JsonResult;
 import com.wangweicheng.rbac.pojo.vo.PageResult;
 import com.wangweicheng.rbac.service.IEmployeeService;
+import com.wangweicheng.rbac.util.RequirePermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/list")
+    @RequirePermission({"员工列表","employee:list"})
     public JsonResult list(EmployeeQueryObject queryObject) {
         PageResult result = employeeService.selectByPage(queryObject);
 //        PageResult<Employee> pageResult = new PageResult(result.getPageNum(), result.getPageSize(), result.getList(), result.getTotal());
@@ -42,6 +44,7 @@ public class EmployeeController {
      * @return
      */
     @DeleteMapping("delete/{id}")
+    @RequirePermission({"员工删除","employee:delete"})
     public JsonResult delete(@PathVariable("id") Long id) {
         employeeService.deleteById(id);
         return JsonResult.success();
@@ -53,6 +56,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/saveOrUpdate")
+    @RequirePermission({"员工新增或编辑","employee:saveOrUpdate"})
     public JsonResult saveOrUpdate(@RequestBody EmployeeRoleVo employeeRoleVo) {
         employeeService.saveOrUpdate(employeeRoleVo);
         return JsonResult.success();
@@ -64,6 +68,7 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/info/{id}")
+    @RequirePermission({"查询单个员工","employee:info"})
     public JsonResult get(@PathVariable("id") Long id) {
         return JsonResult.success(employeeService.selectById(id));
     }
@@ -73,6 +78,7 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/listAll")
+    @RequirePermission({"查询所有员工","employee:listAll"})
     public JsonResult listAll() {
         return JsonResult.success(employeeService.selectAll());
     }
@@ -83,8 +89,10 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/updateState")
+    @RequirePermission({"更改管理员状态","employee:updateState"})
     public JsonResult updateState(@RequestBody AdminStateVo adminStateVo) {
         employeeService.updateStateById(adminStateVo);
         return JsonResult.success();
     }
+
 }

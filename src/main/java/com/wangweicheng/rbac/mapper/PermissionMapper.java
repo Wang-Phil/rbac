@@ -21,4 +21,6 @@ public interface PermissionMapper {
 
     //根据员工ID查询权限表达式
     List<String> selectExpressionByEmpId(Long empId);
+
+    void insert(Permission permission);
 }
