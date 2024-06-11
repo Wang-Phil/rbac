@@ -22,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/permission")
+@CrossOrigin(originPatterns = "*",allowCredentials = "true")
 public class PermissionController {
     @Autowired
     private PermissionServiceImpl permissionService;
@@ -53,5 +54,12 @@ public class PermissionController {
         List<Permission> permissions = permissionService.queryByRoleId(id);
         return JsonResult.success(permissions);
     }
+    @GetMapping("/listAll")
+    @ResponseBody
+    @RequirePermission({"权限列表","permission:listAll"})
+    public JsonResult listAll() {
+        return JsonResult.success(permissionService.listAll());
+    }
+
 
 }

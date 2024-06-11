@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -32,8 +33,12 @@ public class CheckPermissionIntercptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //设置返回的类型
         response.setContentType("application/json;charset=utf-8");
+        if(!(handler instanceof HandlerMethod)){ // 放行跨域的二次校验
+            return true;
+        }
         //获取userid
         String userId = request.getHeader(Constants.USER_ID);
+        Assert.notNull(userId,"useId为空");
         //从redis中获取用户信息
         String objJson = redisUtils.get(Constants.LOGIN_EMPLOYEE + ":" + userId);
         //将其转换为employee类型

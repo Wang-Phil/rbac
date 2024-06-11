@@ -74,6 +74,11 @@ public class PermissionServiceImpl implements IPermissionService {
 
     }
 
+    @Override
+    public List<Permission> listAll() {
+        return permissionMapper.selectAll();
+    }
+
     /**
      * 根据角色id查询拥有的权限集合
      * @param id

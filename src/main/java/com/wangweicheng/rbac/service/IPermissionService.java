@@ -12,4 +12,6 @@ public interface IPermissionService {
     PageInfo selectByPage(QueryObject qo);
     public List<Permission> queryByRoleId(Long id);
     void load();
+
+    List<Permission> listAll();
 }

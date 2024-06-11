@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/employee")
+@CrossOrigin(originPatterns = "*",allowCredentials = "true")
 public class EmployeeController {
 
     @Autowired

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
@@ -29,6 +30,9 @@ public class CheckLoginIntercptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //设定数据响应格式
         response.setContentType("application/json;charset=utf-8");
+        if(!(handler instanceof HandlerMethod)){ // 放行跨域的二次校验
+            return true;
+        }
         //通过request获取head中的useid
         String userId = request.getHeader(Constants.USER_ID);
         Assert.notNull(userId,"非法操作");

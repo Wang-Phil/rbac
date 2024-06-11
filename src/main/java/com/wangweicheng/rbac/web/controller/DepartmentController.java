@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/department")
+@CrossOrigin(originPatterns = "*",allowCredentials = "true")
 public class DepartmentController {
 
     @Autowired
