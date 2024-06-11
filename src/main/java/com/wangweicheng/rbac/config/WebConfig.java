@@ -8,6 +8,7 @@ package com.wangweicheng.rbac.config;
  */
 
 import com.wangweicheng.rbac.web.intercptor.CheckLoginIntercptor;
+import com.wangweicheng.rbac.web.intercptor.CheckPermissionIntercptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -18,10 +19,17 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private CheckLoginIntercptor checkLoginIntercptor;
 
+    @Autowired
+    private CheckPermissionIntercptor checkPermissionIntercptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //拦截所有资源
         registry.addInterceptor(checkLoginIntercptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/api/login","/api/code","/api/logout");
+
+        registry.addInterceptor(checkPermissionIntercptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/api/login","/api/code","/api/logout");
     }

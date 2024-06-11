@@ -33,7 +33,6 @@ public class CheckLoginIntercptor implements HandlerInterceptor {
         String userId = request.getHeader(Constants.USER_ID);
         Assert.notNull(userId,"非法操作");
         //上redis查询数据
-        System.out.println(userId);
         String objJson =  redisUtils.get(Constants.LOGIN_EMPLOYEE + ":" + userId);
         System.out.println(objJson);
         //如果数据为空，响应数据
